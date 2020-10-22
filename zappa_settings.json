@@ -1,0 +1,16 @@
+{
+    "dev": {
+        "aws_region": "us-west-2",
+        "django_settings": "sinfiltrar.settings",
+        "profile_name": "default",
+        "project_name": "sinfiltrar",
+        "runtime": "python3.8",
+        "s3_bucket": "sinfiltrar-lambda",
+        "vpc_config": {
+            "SubnetIds": ["subnet-3aecd97c"],
+            "SecurityGroupIds": ["sg-e6529683"]
+        },
+        "domain": "api2.sinfiltr.ar",
+        "certificate_arn": "arn:aws:acm:us-east-1:153920312805:certificate/d8c88b3d-f3b4-4be7-abdb-5075f11e6535"
+    }
+}
