@@ -1,2 +1,13 @@
 # sinfiltrar-api
-API de sinfiltr.ar - input processing and API
+
+sinfiltr.ar API - input processing and API
+
+Django based project.
+
+To run locally
+
+```
+$ python manage.py runserver
+```
+
+the visit http://localhost:8000
