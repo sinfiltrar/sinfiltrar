@@ -15,4 +15,4 @@ phases:
       - zappa update --disable_progress
   post_build:
     commands:
-      - if [ $CODEBUILD_BUILD_SUCCEEDING = 0 ]; then zappa rollback $STAGE -n 1; exit 1; fi
+      - if [ $CODEBUILD_BUILD_SUCCEEDING = 0 ]; then zappa rollback -n 1; exit 1; fi
