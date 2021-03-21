@@ -1,2 +1,2 @@
 Django<3.2
-zappa<0.6
+zappa<0.60
