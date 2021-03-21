@@ -8,9 +8,9 @@ Install
 -------
 
 ```
-mkvirtualenv sf
-pip install -r requirements.txt
-python manage.py migrate
+$ mkvirtualenv sf
+$ pip install -r requirements.txt
+$ python manage.py migrate
 ```
 
 Develop
