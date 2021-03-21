@@ -2,7 +2,6 @@
     "dev": {
         "aws_region": "us-west-2",
         "django_settings": "sinfiltrar.settings",
-        "profile_name": "default",
         "project_name": "sinfiltrar",
         "runtime": "python3.8",
         "s3_bucket": "sinfiltrar-lambda",
