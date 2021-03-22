@@ -1,4 +1,4 @@
 Django<3.2
 zappa<0.60
 python-dotenv
-psycopg2
+psycopg2-binary
