@@ -12,7 +12,4 @@ phases:
       - pip install -r requirements.txt
   build:
     commands:
-      - zappa package --disable_progres
-  post_build:
-    commands:
-      - if [ $CODEBUILD_BUILD_SUCCEEDING = 0 ]; then zappa rollback -n 1; exit 1; fi
+      - zappa update --disable_progres
