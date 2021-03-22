@@ -29,7 +29,7 @@ SECRET_KEY = '2lxihj+t2j3&!b**vbk&wj=ic@j3-l!$pqnza3t=4!nrr=#rbs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api2.sinfiltr.ar']
+ALLOWED_HOSTS = ['localhost', 'api2.sinfiltr.ar']
 
 
 # Application definition
