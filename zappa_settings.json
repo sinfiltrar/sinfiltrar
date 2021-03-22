@@ -3,7 +3,7 @@
         "aws_region": "us-west-2",
         "django_settings": "sinfiltrar.settings",
         "project_name": "sinfiltrar",
-        "runtime": "python3.7",
+        "runtime": "python3.8",
         "s3_bucket": "sinfiltrar-lambda",
         "vpc_config": {
             "SubnetIds": ["subnet-3aecd97c", "subnet-b6f2f8c2", "subnet-a86389cd", "subnet-968bbabe"],
