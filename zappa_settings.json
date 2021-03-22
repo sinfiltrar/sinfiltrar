@@ -3,15 +3,15 @@
         "aws_region": "us-west-2",
         "django_settings": "sinfiltrar.settings",
         "project_name": "sinfiltrar",
-        "runtime": "python3.8",
+        "runtime": "python3.7",
         "s3_bucket": "sinfiltrar-lambda",
         "vpc_config": {
-            "SubnetIds": ["subnet-3aecd97c"],
-            "SecurityGroupIds": ["sg-e6529683"]
+            "SubnetIds": ["subnet-3aecd97c", "subnet-b6f2f8c2", "subnet-a86389cd", "subnet-968bbabe"],
+            "SecurityGroupIds": ["sg-0381bc47b3658a929"]
         },
         "domain": "api2.sinfiltr.ar",
         "certificate_arn": "arn:aws:acm:us-east-1:153920312805:certificate/d8c88b3d-f3b4-4be7-abdb-5075f11e6535",
-	"keep_warm": true
+	"keep_warm": false
     }
 }
 
