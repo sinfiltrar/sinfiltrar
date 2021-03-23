@@ -17,4 +17,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('issuers/', include('issuers.urls')), 
+    path('docs/', include('docs.urls')),
 ]

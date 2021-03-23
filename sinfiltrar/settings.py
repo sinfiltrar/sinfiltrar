@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'issuers.apps.IssuersConfig',
+    'docs.apps.DocsConfig',
     'corsheaders',
 ]
 
