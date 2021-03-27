@@ -36,12 +36,15 @@ ALLOWED_HOSTS = ['localhost', 'api2.sinfiltr.ar']
 
 INSTALLED_APPS = [
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
     'issuers.apps.IssuersConfig',
     'docs.apps.DocsConfig',
     'corsheaders',
+    'django_s3_storage',
 ]
 
 MIDDLEWARE = [
@@ -134,4 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
+AWS_S3_BUCKET_NAME_STATIC = "sinfiltrar-zappa-static"
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_S3_BUCKET_NAME_STATIC
+STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
