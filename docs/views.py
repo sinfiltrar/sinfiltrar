@@ -4,7 +4,7 @@ import json
 
 
 def latest(request):
-	docs = Doc.objects.all()
+	docs = Doc.objects.order_by('-issued_at')[:10]
 	response = [{
 		"title": doc.title,
 		"slug": doc.slug,
