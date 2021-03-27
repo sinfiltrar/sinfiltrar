@@ -1,6 +1,13 @@
+from sinfiltrar.settings import AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS, AWS_S3_DOMAIN_INPUT_ATTACHMENTS
 from django.db import models
 from issuers.models import Issuer, IssuerEmail
 import mailparser
+import boto3
+import base64
+import logging
+import pytz
+
+logger = logging.getLogger('main')
 
 
 class Doc(models.Model):
@@ -20,7 +27,6 @@ class Doc(models.Model):
 	meta = models.JSONField()
 	created_at = models.DateTimeField(auto_now_add=True)
 
-
 	@classmethod
 	def from_string(cls, raw_email, key):
 
@@ -32,9 +38,45 @@ class Doc(models.Model):
 			'from_email': mail._from,
 			'body_html': mail.body,
 			'body_plain': mail.body,
-			'media': [],
+			'media': cls.process_media(key, mail),
 			'meta': [],
-			'issued_at': mail.date,
+			'issued_at': mail.date.replace(tzinfo=pytz.UTC),
 		}
 
 		return cls(**data)
+
+	@classmethod
+	def process_media(cls, key, mail):
+
+		s3client = boto3.client('s3')
+
+		media = []
+
+		logger.info('Processing media for doc')
+
+		for i, att in enumerate(mail.attachments):
+			# Ensure unique objectKeys for attachments
+			filename = '{}-{}-{}'.format(key, i, att['filename'])
+
+			logger.info('processing {}'.format(filename))
+
+			response = s3client.put_object(
+				ACL='public-read',
+				Body=base64.b64decode(att['payload']),
+				Bucket=AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS,
+				ContentType=att['mail_content_type'],
+				Key=filename,
+			)
+
+			# location = s3client.get_bucket_location(Bucket=AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS)['LocationConstraint']
+			url = "%s/%s" % (AWS_S3_DOMAIN_INPUT_ATTACHMENTS, filename)
+			cid = att['content-id'].strip('<>')
+
+			media.append({
+				'type': att['mail_content_type'],
+				'filename': att['filename'],
+				'url': url,
+				'cid': cid,
+			})
+
+		return media

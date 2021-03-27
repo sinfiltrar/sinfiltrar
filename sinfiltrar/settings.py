@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
@@ -141,3 +142,27 @@ STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
 AWS_S3_BUCKET_NAME_STATIC = "sinfiltrar-zappa-static"
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_S3_BUCKET_NAME_STATIC
 STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+
+AWS_S3_BUCKET_NAME_INPUT = 'sinfiltrar-input'
+AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS = 'sinfiltrar-attachments'
+AWS_S3_DOMAIN_INPUT_ATTACHMENTS = 'https://%s.s3-us-west-2.amazonaws.com' % AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'log_to_stdout': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        },
+    },
+    'loggers': {
+        'main': {
+            'handlers': ['log_to_stdout'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
+    }
+}
