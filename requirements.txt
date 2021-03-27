@@ -3,3 +3,5 @@ zappa<0.60
 python-dotenv
 psycopg2-binary
 django-cors-headers
+boto3<1.17
+mail-parser<3.13
