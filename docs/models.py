@@ -35,9 +35,9 @@ class Doc(models.Model):
 		data = {
 			'id': key,
 			'title': mail.subject,
-			'from_email': mail._from,
-			'body_html': mail.body,
-			'body_plain': mail.body,
+			'from_email': mail.from_[0][1],
+			'body_html': mail.text_html,
+			'body_plain': mail.text_plain,
 			'media': cls.process_media(key, mail),
 			'meta': [],
 			'issued_at': mail.date.replace(tzinfo=pytz.UTC),
