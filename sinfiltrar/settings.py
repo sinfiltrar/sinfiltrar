@@ -93,10 +93,10 @@ WSGI_APPLICATION = 'sinfiltrar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sinfiltrar',
-        'USER': 'postgres',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': 'sinfiltrar2.c2yrjc7heqtk.us-west-2.rds.amazonaws.com',
+        'HOST': os.getenv('DB_HOST'),
         'PORT': '5432',
     }
 }
