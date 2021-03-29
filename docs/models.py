@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from sinfiltrar.settings import AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS, AWS_S3_DOMAIN_INPUT_ATTACHMENTS
 from django.db import models
 from issuers.models import Issuer, IssuerEmail
@@ -12,7 +13,6 @@ logger = logging.getLogger('main')
 
 class Doc(models.Model):
 	id = models.CharField(max_length=40, primary_key=True)
-	issuer_name = models.CharField(max_length=200)
 	from_email = models.CharField(max_length=254)
 	issuer = models.ForeignKey('issuers.Issuer', null=True, on_delete=models.CASCADE)
 	issuer_email = models.ForeignKey('issuers.IssuerEmail', null=True, on_delete=models.DO_NOTHING)
@@ -26,6 +26,15 @@ class Doc(models.Model):
 	media = models.JSONField()
 	meta = models.JSONField()
 	created_at = models.DateTimeField(auto_now_add=True)
+
+	def set_issuer_based_on_email(self):
+		try:
+			issuer_email = IssuerEmail.objects.filter(email=self.from_email).get()
+			self.issuer_email = issuer_email
+			self.issuer = self.issuer_email.issuer
+		except ObjectDoesNotExist:
+			pass
+
 
 	@classmethod
 	def from_string(cls, raw_email, key):
