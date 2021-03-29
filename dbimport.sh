@@ -20,7 +20,7 @@ if ! dropdb sinfiltrar --if-exists ; then
 fi
 
 echo "Importing into \033[37m$FILEPATH\033[0m local database"
-if ! pg_restore -C -d sinfiltrar -h localhost $FILEPATH  ; then
+if ! pg_restore -C -d postgres -h localhost $FILEPATH  ; then
 	echo -e "\033[31mError\033[0m: Unable to import dump to local database"
 	exit 1
 fi
