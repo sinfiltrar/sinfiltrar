@@ -8,7 +8,7 @@ class DocSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Doc
-        fields = ['id', 'title', 'slug', 'body_plain', 'issued_at', 'issuer']
+        fields = ['id', 'title', 'slug', 'body_plain', 'body_html', 'issued_at', 'issuer']
         extra_kwargs = {
             'url': {'lookup_field': 'slug'}
         }
