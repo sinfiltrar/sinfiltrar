@@ -19,8 +19,8 @@ class Command(BaseCommand):
 		for i, obj in enumerate(bucket.objects.all()):
 			self.stdout.write('{}/{} downloading object {}'.format(i+1, object_count, obj.key))
 			file = self.download(AWS_S3_BUCKET_NAME_INPUT, obj.key)
-			mailBody = file.get()['Body'].read().decode('utf-8')
-			doc = Doc.from_string(mailBody, obj.key)
+			mail_body = file.get()['Body'].read().decode('utf-8')
+			doc = Doc.from_string(mail_body, obj.key)
 			self.stdout.write('Processed doc {}'.format(doc.title))
 			doc.save()
 
