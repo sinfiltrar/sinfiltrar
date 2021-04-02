@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.text import slugify
 from sinfiltrar.settings import AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS, AWS_S3_DOMAIN_INPUT_ATTACHMENTS
 from django.db import models
 from issuers.models import Issuer, IssuerEmail
@@ -41,18 +42,19 @@ class Doc(models.Model):
 
 		mail = mailparser.parse_from_string(raw_email)
 
-		data = {
+		doc = cls(**{
 			'id': key,
 			'title': mail.subject,
+			'slug': slugify(mail.subject),
 			'from_email': mail.from_[0][1],
 			'body_html': mail.text_html,
 			'body_plain': mail.text_plain,
 			'media': cls.process_media(key, mail),
 			'meta': [],
 			'issued_at': mail.date.replace(tzinfo=pytz.UTC),
-		}
-
-		return cls(**data)
+		})
+		doc.set_issuer_based_on_email()
+		return doc
 
 	@classmethod
 	def process_media(cls, key, mail):
