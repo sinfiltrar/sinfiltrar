@@ -26,7 +26,7 @@ class Doc(models.Model):
 	body_md = models.TextField()
 	media = models.JSONField()
 	meta = models.JSONField()
-	created_at = models.DateTimeField(auto_now_add=True)
+	created_at = models.DateTimeField(auto_now_add=True, null=True)
 
 	def set_issuer_based_on_email(self):
 		try:
