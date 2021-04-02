@@ -1,9 +1,11 @@
-from django.urls import path
-
+from django.urls import include, path
+from rest_framework import routers
 from . import views
 
+
+router = routers.SimpleRouter()
+router.register(r'', views.IssuerViewSet)
+
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('<slug:slug>', views.one, name='one'),
-    path('<slug:slug>/docs', views.docs, name='docs'),
-];
+    path('', include(router.urls)),
+]

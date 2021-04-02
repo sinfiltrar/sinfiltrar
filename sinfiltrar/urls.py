@@ -16,8 +16,10 @@ Including another URLconf
 from django.urls import path, include
 from django.contrib import admin
 
+
 urlpatterns = [
-    path('issuers/', include('issuers.urls')), 
+    path('issuers/', include('issuers.urls')),
     path('docs/', include('docs.urls')),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

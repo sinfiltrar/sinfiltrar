@@ -1,8 +1,10 @@
-from django.urls import path
-
+from django.urls import include, path
 from . import views
+from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register(r'', views.DocViewSet)
 
 urlpatterns = [
-    path('latest/', views.latest, name='latest'),
-    path('<slug:slug>', views.one, name='one'),
+    path('', include(router.urls)),
 ]

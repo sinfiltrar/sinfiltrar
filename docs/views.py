@@ -1,25 +1,17 @@
+from rest_framework import viewsets
 from docs.models import Doc
-from django.http import HttpResponse
-import json
+from docs.serializers import DocSerializer
 
 
-def latest(request):
-	docs = Doc.objects.order_by('-issued_at')[:10]
-	response = [{
-		"title": doc.title,
-		"slug": doc.slug,
-		"issued_at": doc.issued_at.__str__(),
-	} for doc in docs]
-	return HttpResponse(json.dumps(response), content_type="application/json");
+class DocViewSet(viewsets.ReadOnlyModelViewSet):
+	lookup_field = 'slug'
+	queryset = Doc.objects.order_by('-issued_at')
+	serializer_class = DocSerializer
+	permission_classes = []
 
-
-def one(request, slug):
-	doc = Doc.objects.get(slug=slug)
-	return HttpResponse(json.dumps({
-		"title": doc.title,
-		"slug": doc.slug,
-		"short_text": doc.short_text,
-		"content": doc.body_plain,
-		"date": doc.issued_at.__str__(),
-		"media": doc.media,
-	}), content_type="application/json")
+	def get_queryset(self):
+		queryset = self.queryset
+		issuer_slug = self.request.query_params.get('issuer')
+		if (issuer_slug is not None):
+			queryset = queryset.filter(issuer__slug=issuer_slug)
+		return queryset;
