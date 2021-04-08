@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '2lxihj+t2j3&!b**vbk&wj=ic@j3-l!$pqnza3t=4!nrr=#rbs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('APP_DEBUG', True)
 
 ALLOWED_HOSTS = ['localhost', 'api2.sinfiltr.ar']
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'django.contrib.postgres',
 
     'issuers.apps.IssuersConfig',
     'docs.apps.DocsConfig',

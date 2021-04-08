@@ -1,3 +1,4 @@
+from django.contrib.postgres.search import SearchVector
 from rest_framework import viewsets
 from docs.models import Doc
 from docs.serializers import DocSerializer
@@ -12,6 +13,13 @@ class DocViewSet(viewsets.ReadOnlyModelViewSet):
 	def get_queryset(self):
 		queryset = self.queryset
 		issuer_slug = self.request.query_params.get('issuer')
-		if (issuer_slug is not None):
+		if issuer_slug is not None:
 			queryset = queryset.filter(issuer__slug=issuer_slug)
-		return queryset;
+		else:
+			queryset = queryset.filter(issuer__isnull=False)
+
+		q = self.request.query_params.get('q')
+		if q is not None:
+			queryset = queryset.annotate(search=SearchVector('title', 'body_plain')).filter(search=q)
+
+		return queryset
