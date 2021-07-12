@@ -1,10 +1,31 @@
 from django.contrib.postgres.search import SearchVector
+from django.shortcuts import render
+
 from rest_framework import viewsets
-from docs.models import Doc
+
 from docs.serializers import DocSerializer
+from docs.models import Doc
+
+import markdown
 
 
-class DocViewSet(viewsets.ReadOnlyModelViewSet):
+def index(request):
+	context = {
+		'latest_docs': Doc.objects.filter(issuer__isnull=False).order_by('-issued_at')[:20]
+	}
+	return render(request, 'docs/index.html', context)
+
+
+def one(request, slug):
+	doc = Doc.objects.get(slug=slug);
+	context = {
+		'doc': doc,
+		'body': markdown.markdown(doc.body_md)
+	}
+	return render(request, 'docs/one.html', context)
+
+
+class ApiDocViewSet(viewsets.ReadOnlyModelViewSet):
 	lookup_field = 'slug'
 	queryset = Doc.objects.order_by('-issued_at')
 	serializer_class = DocSerializer

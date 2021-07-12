@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if latest_docs %}
+
+
+	<p>Comunicaciones oficiales de distintos <a href="{% url 'issuers_index' %}">organismos</a>.</p>
+
+	<h2>Últimos documentos</h2>
+
+    <ul>
+    {% for doc in latest_docs %}
+        <li>
+			<a href="/issuers/{{ issuer.slug }}/"><small>{{ doc.issuer.name }}</small></a><br>
+			<a href="/docs/{{ doc.slug }}/">{{ doc.title | title }}</a>
+		</li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p>No docs available.</p>
+{% endif %}
+
+{% endblock %}

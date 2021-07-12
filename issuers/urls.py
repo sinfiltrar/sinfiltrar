@@ -4,8 +4,10 @@ from . import views
 
 
 router = routers.SimpleRouter()
-router.register(r'', views.IssuerViewSet)
+router.register(r'', views.ApiIssuerViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/issuers/', include(router.urls)),
+    path('issuers/', views.index, name='issuers_index'),
+    path('issuers/<slug>/', views.one, name='issuers_one'),
 ]

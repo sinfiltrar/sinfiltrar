@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+	<h2>{{ issuer.name }}</h2>
+
+	<h3>Últimos comunicados</h3>
+
+	<ul>
+    {% for doc in issuer_docs %}
+        <li>
+			<small>{{ doc.issued_at | date }}</small><br>
+			<a href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
+		</li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

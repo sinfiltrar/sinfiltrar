@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '•';">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'issuers_index' %}">Organismos</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'issuers_one' slug=doc.issuer.slug %}">{{ doc.issuer.name }}</a></li>
+  </ol>
+</nav>
+
+<div class="doc">
+
+	<p>{{ doc.issued_at | date }}</p>
+
+	<h1>{{ doc.title | title }}</h1>
+
+	{{ body | safe }}
+
+</div>
+
+
+{% endblock %}
