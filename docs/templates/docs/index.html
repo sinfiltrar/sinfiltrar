@@ -12,8 +12,8 @@
     <ul>
     {% for doc in latest_docs %}
         <li>
-			<a href="/issuers/{{ issuer.slug }}/"><small>{{ doc.issuer.name }}</small></a><br>
-			<a href="/docs/{{ doc.slug }}/">{{ doc.title | title }}</a>
+			<a href="{% url 'issuers_one' slug=doc.issuer.slug %}"><small>{{ doc.issuer.name }}</small></a><br>
+			<a href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
 		</li>
     {% endfor %}
     </ul>
