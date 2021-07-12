@@ -9,3 +9,4 @@ django_s3_storage
 djangorestframework<3.12.4
 django-extensions
 markdownify
+markdown
