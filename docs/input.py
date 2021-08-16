@@ -19,7 +19,12 @@ def process_existing_s3():
 
 	print('Connected to bucket')
 
+	count = sum(1 for _ in bucket.objects.all())
+	print(f'About to process {count} emails')
+
+	i = 0
 	for object in bucket.objects.all():
-		print(f'Processing email {object.key}',)
+		i += 1
+		print(f'Processing email ({i}/{count}) {object.key}',)
 		doc = Doc.from_s3(object.key)
 		doc.save()
