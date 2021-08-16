@@ -20,8 +20,6 @@ def process_existing_s3():
 	print('Connected to bucket')
 
 	for object in bucket.objects.all():
-		print(f'Sending SNS message for email {object.key}',)
-		response = sns.publish(
-			TopicArn=f'arn:aws:sns:us-west-2:153920312805:{settings.AWS_S3_BUCKET_NAME_INPUT}',
-			Message=json.dumps({'receipt': {'action': {'bucketName': object.bucket_name, 'objectKey': object.key}}}),
-		)
+		print(f'Processing email {object.key}',)
+		doc = Doc.from_s3(object.key)
+		doc.save()
