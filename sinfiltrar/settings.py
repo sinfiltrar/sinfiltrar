@@ -30,7 +30,7 @@ SECRET_KEY = '2lxihj+t2j3&!b**vbk&wj=ic@j3-l!$pqnza3t=4!nrr=#rbs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('APP_DEBUG', True)
 
-ALLOWED_HOSTS = ['localhost', 'api2.sinfiltr.ar']
+ALLOWED_HOSTS = ['localhost', 'sinfiltr.ar']
 
 
 # Application definition
