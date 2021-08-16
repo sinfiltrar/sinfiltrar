@@ -1,13 +1,16 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.utils.text import slugify
-from sinfiltrar.settings import AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS, AWS_S3_DOMAIN_INPUT_ATTACHMENTS
-from django.db import models
-from issuers.models import Issuer, IssuerEmail
 import mailparser
 import boto3
 import base64
 import logging
 import pytz
+
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils.text import slugify
+from django.db import models
+
+from issuers.models import Issuer, IssuerEmail
+
 
 logger = logging.getLogger('main')
 
@@ -74,13 +77,13 @@ class Doc(models.Model):
 			response = s3client.put_object(
 				ACL='public-read',
 				Body=base64.b64decode(att['payload']),
-				Bucket=AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS,
+				Bucket=settings.AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS,
 				ContentType=att['mail_content_type'],
 				Key=filename,
 			)
 
 			# location = s3client.get_bucket_location(Bucket=AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS)['LocationConstraint']
-			url = "%s/%s" % (AWS_S3_DOMAIN_INPUT_ATTACHMENTS, filename)
+			url = "%s/%s" % (settings.AWS_S3_DOMAIN_INPUT_ATTACHMENTS, filename)
 			cid = att['content-id'].strip('<>')
 
 			media.append({
@@ -91,3 +94,16 @@ class Doc(models.Model):
 			})
 
 		return media
+
+	@classmethod
+	def from_s3(cls, objectKey):
+
+		s3 = boto3.resource('s3', )
+
+		file = s3.Object(settings.AWS_S3_BUCKET_NAME_INPUT, objectKey)
+		print(f'Downloading from {objectKey}')
+
+		mailBody = file.get()['Body'].read().decode('utf-8')
+		print(f'Got body from {objectKey}')
+
+		return cls.from_string(mailBody, objectKey)

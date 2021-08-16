@@ -4,9 +4,10 @@ python-dotenv
 psycopg2-binary
 django-cors-headers
 boto3<1.17
+botocore==1.17.57
 mail-parser<3.13
 django_s3_storage
 djangorestframework<3.12.4
 django-extensions
-markdownify
 markdown
+troposphere<3
