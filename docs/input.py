@@ -14,7 +14,6 @@ def process_s3_input(event):
 
 def process_existing_s3():
 	s3 = boto3.resource('s3', )
-	sns = boto3.client('sns')
 	bucket = s3.Bucket(settings.AWS_S3_BUCKET_NAME_INPUT)
 
 	print('Connected to bucket')
