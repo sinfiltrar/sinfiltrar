@@ -147,6 +147,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
 AWS_S3_BUCKET_NAME_STATIC = "sinfiltrar-zappa-static"
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_S3_BUCKET_NAME_STATIC
