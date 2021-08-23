@@ -3,13 +3,14 @@ import boto3
 import base64
 import logging
 import pytz
+from markdownify import markdownify as md
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.text import slugify
 from django.db import models
 
-from issuers.models import Issuer, IssuerEmail
+from issuers.models import IssuerEmail
 
 
 logger = logging.getLogger('main')
@@ -60,6 +61,7 @@ class Doc(models.Model):
             'from_email': mail.from_[0][1],
             'body_html': body_html,
             'body_plain': ','.join(mail.text_plain),
+            'body_md': md(' '.join(mail.text_html)),
             'media': media,
             'meta': [],
             'issued_at': mail.date.replace(tzinfo=pytz.UTC),
