@@ -17,6 +17,22 @@
 
 	{{ body | safe }}
 
+    <hr/>
+
+    {% if doc.media %}
+    <h3>Documentos</h3>
+    <ul>
+	{% for media in doc.media %}
+        <li>
+            <a href="{{ media.url }}" title="{{ media.filename }}" target="_blank">
+                {{ media.filename }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+
 </div>
 
 

@@ -32,6 +32,9 @@ class Doc(models.Model):
     meta = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
+    class Meta:
+        ordering = ('-issued_at', )
+
     def set_issuer_based_on_email(self):
         try:
             issuer_email = IssuerEmail.objects.filter(email=self.from_email).get()
