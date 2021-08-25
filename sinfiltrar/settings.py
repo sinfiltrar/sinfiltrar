@@ -31,9 +31,9 @@ SECRET_KEY = '2lxihj+t2j3&!b**vbk&wj=ic@j3-l!$pqnza3t=4!nrr=#rbs'
 DEBUG = os.getenv('APP_DEBUG', True)
 
 ALLOWED_HOSTS = [
-	'localhost',
-	'sinfiltr.ar',
-	'ev3szims3b.execute-api.us-west-2.amazonaws.com',
+    'localhost',
+    'sinfiltr.ar',
+    'ev3szims3b.execute-api.us-west-2.amazonaws.com',
 ]
 
 
