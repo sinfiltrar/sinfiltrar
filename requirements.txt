@@ -12,3 +12,4 @@ django-extensions
 markdown
 markdownify
 troposphere<3
+django-ses

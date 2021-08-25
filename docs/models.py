@@ -7,10 +7,12 @@ from markdownify import markdownify as md
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.text import slugify
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
 
 from issuers.models import IssuerEmail
+from sinfiltrar.emails import mail_staff
 
 
 logger = logging.getLogger('main')
@@ -41,7 +43,18 @@ class Doc(models.Model):
             self.issuer_email = issuer_email
             self.issuer = self.issuer_email.issuer
         except ObjectDoesNotExist:
-            pass
+            url = settings.DOMAIN + reverse('admin:docs_doc_change', args=[self.id])
+            mail_staff(
+                subject='Nuevo input sin issuer asignado',
+                message=f"""key: {self.id} {url}/n
+                from: {self.from_email}/n
+                title: {self.title}
+                """,
+                html_message=f"""key: <a href="{url}">{self.id}</a><br/>
+                from: {self.from_email}<br/>
+                title: {self.title}<br/>
+                """,
+            )
 
     @classmethod
     def from_string(cls, raw_email, key):

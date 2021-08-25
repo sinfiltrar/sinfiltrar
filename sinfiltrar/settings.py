@@ -160,6 +160,15 @@ AWS_S3_BUCKET_NAME_INPUT = 'sinfiltrar-input'
 AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS = 'sinfiltrar-attachments'
 AWS_S3_DOMAIN_INPUT_ATTACHMENTS = 'https://%s.s3-us-west-2.amazonaws.com' % AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS
 
+EMAIL_BACKEND = 'django_ses.SESBackend'
+DEFAULT_FROM_EMAIL = 'info@sinfiltr.ar'
+EMAIL_SUBJECT_PREFIX = '[Sin Filtrar] '
+SERVER_EMAIL = 'root@sinfiltr.ar'
+AWS_SES_REGION_NAME = 'us-west-2'
+AWS_SES_REGION_ENDPOINT = 'email.us-west-2.amazonaws.com'
+
+DOMAIN = 'https://sinfiltr.ar'
+
 
 LOGGING = {
     'version': 1,
