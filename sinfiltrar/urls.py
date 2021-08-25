@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 
 from .views import home as home_view
 
@@ -24,5 +25,6 @@ urlpatterns = [
     path('', include('docs.urls')),
     path('', include('issuers.urls')),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
