@@ -20,7 +20,7 @@ logger = logging.getLogger('main')
 
 class Doc(models.Model):
     id = models.CharField(max_length=40, primary_key=True)
-    from_email = models.CharField(max_length=254)
+    from_email = models.CharField(max_length=254, blank=True, null=True)
     issuer = models.ForeignKey('issuers.Issuer', null=True, on_delete=models.CASCADE)
     issuer_email = models.ForeignKey('issuers.IssuerEmail', null=True, on_delete=models.DO_NOTHING)
     issued_at = models.DateTimeField()
@@ -29,9 +29,9 @@ class Doc(models.Model):
     short_text = models.CharField(max_length=255)
     body_html = models.TextField()
     body_plain = models.TextField()
-    body_md = models.TextField()
-    media = models.JSONField()
-    meta = models.JSONField()
+    body_md = models.TextField(blank=True, null=True)
+    media = models.JSONField(blank=True, null=True)
+    meta = models.JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
@@ -43,6 +43,7 @@ class Doc(models.Model):
             self.issuer_email = issuer_email
             self.issuer = self.issuer_email.issuer
         except ObjectDoesNotExist:
+            # mail staff on unknown issuer email
             url = settings.DOMAIN + reverse('admin:docs_doc_change', args=[self.id])
             mail_staff(
                 subject='Nuevo input sin issuer asignado',
