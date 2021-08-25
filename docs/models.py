@@ -16,94 +16,102 @@ logger = logging.getLogger('main')
 
 
 class Doc(models.Model):
-	id = models.CharField(max_length=40, primary_key=True)
-	from_email = models.CharField(max_length=254)
-	issuer = models.ForeignKey('issuers.Issuer', null=True, on_delete=models.CASCADE)
-	issuer_email = models.ForeignKey('issuers.IssuerEmail', null=True, on_delete=models.DO_NOTHING)
-	issued_at = models.DateTimeField()
-	title = models.CharField(max_length=255)
-	slug = models.CharField(max_length=255)
-	short_text = models.CharField(max_length=255)
-	body_html = models.TextField()
-	body_plain = models.TextField()
-	body_md = models.TextField()
-	media = models.JSONField()
-	meta = models.JSONField()
-	created_at = models.DateTimeField(auto_now_add=True, null=True)
+    id = models.CharField(max_length=40, primary_key=True)
+    from_email = models.CharField(max_length=254)
+    issuer = models.ForeignKey('issuers.Issuer', null=True, on_delete=models.CASCADE)
+    issuer_email = models.ForeignKey('issuers.IssuerEmail', null=True, on_delete=models.DO_NOTHING)
+    issued_at = models.DateTimeField()
+    title = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255)
+    short_text = models.CharField(max_length=255)
+    body_html = models.TextField()
+    body_plain = models.TextField()
+    body_md = models.TextField()
+    media = models.JSONField()
+    meta = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
-	def set_issuer_based_on_email(self):
-		try:
-			issuer_email = IssuerEmail.objects.filter(email=self.from_email).get()
-			self.issuer_email = issuer_email
-			self.issuer = self.issuer_email.issuer
-		except ObjectDoesNotExist:
-			pass
+    def set_issuer_based_on_email(self):
+        try:
+            issuer_email = IssuerEmail.objects.filter(email=self.from_email).get()
+            self.issuer_email = issuer_email
+            self.issuer = self.issuer_email.issuer
+        except ObjectDoesNotExist:
+            pass
 
+    @classmethod
+    def from_string(cls, raw_email, key):
 
-	@classmethod
-	def from_string(cls, raw_email, key):
+        mail = mailparser.parse_from_string(raw_email)
 
-		mail = mailparser.parse_from_string(raw_email)
+        media = cls.process_media(key, mail)
+        body_html = ','.join(mail.text_html)
 
-		doc = cls(**{
-			'id': key,
-			'title': mail.subject,
-			'slug': slugify(mail.subject),
-			'from_email': mail.from_[0][1],
-			'body_html': ','.join(mail.text_html),
-			'body_plain': ','.join(mail.text_plain),
-			'media': cls.process_media(key, mail),
-			'meta': [],
-			'issued_at': mail.date.replace(tzinfo=pytz.UTC),
-		})
-		doc.set_issuer_based_on_email()
-		return doc
+        # correctly set s3 attachments urls
+        if body_html:
+            for att in media:
+                if att['cid']:
+                    body_html = body_html.replace('cid:{}'.format(att['cid']), att['url'])
 
-	@classmethod
-	def process_media(cls, key, mail):
+        doc = cls(**{
+            'id': key,
+            'title': mail.subject,
+            'slug': slugify(mail.subject),
+            'from_email': mail.from_[0][1],
+            'body_html': body_html,
+            'body_plain': ','.join(mail.text_plain),
+            'media': media,
+            'meta': [],
+            'issued_at': mail.date.replace(tzinfo=pytz.UTC),
+        })
+        doc.set_issuer_based_on_email()
+        return doc
 
-		s3client = boto3.client('s3')
+    @classmethod
+    def process_media(cls, key, mail):
 
-		media = []
+        s3client = boto3.client('s3')
 
-		logger.info('Processing media for doc')
+        media = []
 
-		for i, att in enumerate(mail.attachments):
-			# Ensure unique objectKeys for attachments
-			filename = '{}-{}-{}'.format(key, i, att['filename'])
+        logger.info('Processing media for doc')
 
-			logger.info('processing {}'.format(filename))
+        for i, att in enumerate(mail.attachments):
+            # Ensure unique objectKeys for attachments
+            filename = '{}-{}-{}'.format(key, i, att['filename'])
 
-			response = s3client.put_object(
-				ACL='public-read',
-				Body=base64.b64decode(att['payload']),
-				Bucket=settings.AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS,
-				ContentType=att['mail_content_type'],
-				Key=filename,
-			)
+            logger.info('processing {}'.format(filename))
 
-			# location = s3client.get_bucket_location(Bucket=AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS)['LocationConstraint']
-			url = "%s/%s" % (settings.AWS_S3_DOMAIN_INPUT_ATTACHMENTS, filename)
-			cid = att['content-id'].strip('<>')
+            response = s3client.put_object(
+                ACL='public-read',
+                Body=base64.b64decode(att['payload']),
+                Bucket=settings.AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS,
+                ContentType=att['mail_content_type'],
+                Key=filename,
+            )
 
-			media.append({
-				'type': att['mail_content_type'],
-				'filename': att['filename'],
-				'url': url,
-				'cid': cid,
-			})
+            # location = s3client.get_bucket_location(Bucket=AWS_S3_BUCKET_NAME_INPUT_ATTACHMENTS)['LocationConstraint']
+            url = "%s/%s" % (settings.AWS_S3_DOMAIN_INPUT_ATTACHMENTS, filename)
+            cid = att['content-id'].strip('<>')
 
-		return media
+            media.append({
+                'type': att['mail_content_type'],
+                'filename': att['filename'],
+                'url': url,
+                'cid': cid,
+            })
 
-	@classmethod
-	def from_s3(cls, objectKey):
+        return media
 
-		s3 = boto3.resource('s3', )
+    @classmethod
+    def from_s3(cls, objectKey):
 
-		file = s3.Object(settings.AWS_S3_BUCKET_NAME_INPUT, objectKey)
-		print(f'Downloading from {objectKey}')
+        s3 = boto3.resource('s3', )
 
-		mailBody = file.get()['Body'].read().decode('utf-8')
-		print(f'Got body from {objectKey}')
+        file = s3.Object(settings.AWS_S3_BUCKET_NAME_INPUT, objectKey)
+        print(f'Downloading from {objectKey}')
 
-		return cls.from_string(mailBody, objectKey)
+        mailBody = file.get()['Body'].read().decode('utf-8')
+        print(f'Got body from {objectKey}')
+
+        return cls.from_string(mailBody, objectKey)
