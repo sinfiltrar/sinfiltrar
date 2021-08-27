@@ -25,7 +25,7 @@ class Doc(models.Model):
     issuer_email = models.ForeignKey('issuers.IssuerEmail', null=True, on_delete=models.DO_NOTHING)
     issued_at = models.DateTimeField()
     title = models.CharField(max_length=255)
-    slug = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255, unique=True)
     short_text = models.CharField(max_length=255)
     body_html = models.TextField()
     body_plain = models.TextField()
