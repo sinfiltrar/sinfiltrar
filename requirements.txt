@@ -13,3 +13,4 @@ markdown
 markdownify
 troposphere<3
 django-ses
+zappa-django-utils

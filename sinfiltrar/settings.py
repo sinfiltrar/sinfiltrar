@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django_s3_storage',
     'rest_framework',
     'django_extensions',
+    'zappa_django_utils',
 ]
 
 MIDDLEWARE = [
