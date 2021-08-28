@@ -13,6 +13,7 @@
         "certificate_arn": "arn:aws:acm:us-east-1:153920312805:certificate/782f506d-9462-45fd-ac20-de1063931356",
 		"keep_warm": 	false,
 		"timeout_seconds": 600,
+        "role_arn": "arn:aws:iam::153920312805:role/sinfiltrar-dev-ZappaLambdaExecutionRole",
 		"events": [{
 			"function": "docs.input.process_s3_input",
 			"event_source": {

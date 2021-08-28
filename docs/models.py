@@ -3,6 +3,7 @@ import boto3
 import base64
 import logging
 import pytz
+import twitter
 from markdownify import markdownify as md
 
 from django.conf import settings
@@ -134,3 +135,21 @@ class Doc(models.Model):
         print(f'Got body from {objectKey}')
 
         return cls.from_string(mailBody, objectKey)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('docs_one', kwargs={'slug': self.slug})
+
+    def send_tweet(self):
+
+        if self.issuer is None:
+            return
+
+        api = twitter.Api(consumer_key=settings.TWITTER_CONSUMER_API_KEY,
+                          consumer_secret=settings.TWITTER_CONSUMER_API_SECRET_KEY,
+                          access_token_key=settings.TWITTER_ACCESS_TOKEN,
+                          access_token_secret=settings.TWITTER_ACCESS_TOKEN_SECRET)
+
+        status = api.PostUpdate(f'{self.issuer.name}: {self.title} – {self.get_absolute_url()}')
+
+        print(status.__dict__)
