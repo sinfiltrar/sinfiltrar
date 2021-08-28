@@ -15,7 +15,7 @@
 		"timeout_seconds": 600,
         "extra_permissions": [{
             "Effect": "Allow",
-            "Action": ["ses:SendEmail", "ses:SendRawEmail"],
+            "Action": ["ses:SendEmail", "ses:SendRawEmail", "ses:GetSendQuota"],
             "Resource": "*"
         }],
 		"events": [{
