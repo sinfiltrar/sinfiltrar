@@ -2,38 +2,50 @@
 
 {% block content %}
 
-<nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '•';">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'issuers_index' %}">Organismos</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'issuers_one' slug=doc.issuer.slug %}">{{ doc.issuer.name }}</a></li>
-  </ol>
-</nav>
+<section class="doc">
 
-<div class="doc">
-
-	<p>{{ doc.issued_at | date }}</p>
-
-	<h1>{{ doc.title | title }}</h1>
-
-	{{ body | safe }}
-
-    <hr/>
-
-    {% if doc.media %}
-    <h3>Documentos</h3>
-    <ul>
-	{% for media in doc.media %}
-        <li>
-            <a href="{{ media.url }}" title="{{ media.filename }}" target="_blank">
-                {{ media.filename }}
+    <div class="header" style="--mycolor=#{{ doc.issuer.color }}">
+        <div class="doc-item d-flex" style="--mycolor: #{{ doc.issuer.color }}">
+            <a class="avatar flex-shrink-0" href="{% url 'issuers_one' slug=doc.issuer.slug %}">
+                {{ doc.issuer.avatar }}
             </a>
-        </li>
-    {% endfor %}
-    </ul>
-    {% endif %}
+            <div class="flex-grow-1 ms-3">
+                <a class="issuer-name" href="{% url 'issuers_one' slug=doc.issuer.slug %}">{{ doc.issuer.name }}</a>
+                <br>
+                <span class="date">{{ doc.issued_at | date }}</span>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="offset-1 col-lg-10">
+            <div class="hero">
+                <h1>{{ doc.title | title }}</h1>
+            </div>
 
-</div>
+            <div class="body">
+                {{ body | safe }}
+            </div>
+
+            {% if doc.media %}
+            <div class="media">
+                <h3>📎 Documentos Adjuntos</h3>
+                <ul>
+                    {% for media in doc.media %}
+                    <li>
+                        <a href="{{ media.url }}" title="{{ media.filename }}" target="_blank">
+                            {{ media.filename }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+</section>
 
 
 {% endblock %}

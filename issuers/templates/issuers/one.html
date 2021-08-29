@@ -3,18 +3,35 @@
 
 
 {% block content %}
+    <div class="hero bordered" style="--mycolor: #{{ issuer.color }}">
+        <div class="row">
+            <div class="offset-1 col-lg-10 d-flex justify-content-between align-items-center">
+	            <h2>{{ issuer.name }}</h2>
+                <span class="avatar">{{ issuer.avatar }}</span>
+            </div>
+        </div>
+    </div>
 
-	<h2>{{ issuer.name }}</h2>
+    <div class="header">
+	    <h3>Últimos comunicados</h3>
+    </div>
 
-	<h3>Últimos comunicados</h3>
-
-	<ul>
-    {% for doc in issuer_docs %}
-        <li>
-			<small>{{ doc.issued_at | date }}</small><br>
-			<a href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
-		</li>
-    {% endfor %}
-    </ul>
+    <section class="doc-list row">
+        <ul class="offset-1 col-10">
+        {% for doc in issuer_docs %}
+            <li class="doc-item d-flex align-items-start" style="--mycolor: #006EFF">
+                <a class="avatar flex-shrink-0" href="{% url 'issuers_one' slug=doc.issuer.slug %}">
+                    {{ doc.issuer.avatar }}
+                </a>
+                <div class="flex-grow-1 ms-3">
+                    <a class="issuer-name" href="{% url 'issuers_one' slug=doc.issuer.slug %}">{{ doc.issuer.name }}</a>
+                    <span class="date">{{ doc.issued_at | date }}</span>
+                    <br>
+                    <a class="title" href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
 
 {% endblock %}

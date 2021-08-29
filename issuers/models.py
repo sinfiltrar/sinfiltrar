@@ -3,6 +3,8 @@ from django.db import models
 class Issuer(models.Model):
     slug = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
+    color = models.CharField(max_length=6, default='006EFF')
+    avatar = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

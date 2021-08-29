@@ -2,11 +2,24 @@
 
 {% block content %}
 
-<h2>Organismos Registrados</h2>
+<div class="hero bordered">
+    <div class="row">
+        <div class="offset-lg-1 col-lg-10">
+            <h2>Organismos Registrados</h2>
+        </div>
+    </div>
+</div>
 
 <ul>
 {% for issuer in issuers %}
-	<li><a href="{% url 'issuers_one' slug=issuer.slug  %}">{{ issuer.name }}</a><br></li>
+    <div class="issuer-item d-flex align-items-center" style="--mycolor: #{{ issuer.color }}">
+        <a class="avatar flex-shrink-0" href="{% url 'issuers_one' slug=issuer.slug %}">
+            {{ issuer.avatar }}
+        </a>
+        <div class="flex-grow-1 ms-3">
+            <a class="issuer-name" href="{% url 'issuers_one' slug=issuer.slug %}">{{ issuer.name }}</a>
+        </div>
+    </div>
 {% endfor %}
 </ul>
 

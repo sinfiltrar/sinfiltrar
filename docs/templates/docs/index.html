@@ -4,21 +4,35 @@
 
 {% if latest_docs %}
 
+    <div class="hero bordered">
+        <div class="row">
+            <div class="offset-1 col-lg-6">
+                <h2>Comunicados oficiales de organismos públicos</h2>
+            </div>
+        </div>
+    </div>
 
-	<p>Comunicaciones oficiales de distintos <a href="{% url 'issuers_index' %}">organismos</a>.</p>
+    <div class="header">
+        <h3>Últimos Documentos</h3>
+    </div>
 
-	<h2>Últimos documentos</h2>
-
-    <ul>
-    {% for doc in latest_docs %}
-        <li>
-			<small class="text-muted">{{ doc.issued_at | date }} -
-			<a href="{% url 'issuers_one' slug=doc.issuer.slug %}">{{ doc.issuer.name }}</small></a>
-			<br>
-			<a href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
-		</li>
-    {% endfor %}
-    </ul>
+    <section class="doc-list row">
+        <ul class="offset-1 col-10">
+        {% for doc in latest_docs %}
+            <li class="doc-item d-flex" style="--mycolor: #{{doc.issuer.color}}">
+                <a class="avatar flex-shrink-0" href="{% url 'issuers_one' slug=doc.issuer.slug %}">
+                    {{ doc.issuer.avatar }}
+                </a>
+                <div class="flex-grow-1 ms-3">
+                    <a class="issuer-name" href="{% url 'issuers_one' slug=doc.issuer.slug %}">{{ doc.issuer.name }}</a>
+                    <span class="date">{{ doc.issued_at | date }}</span>
+                    <br>
+                    <a class="title" href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
 
 {% else %}
     <p>No docs available.</p>
