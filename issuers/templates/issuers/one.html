@@ -5,7 +5,7 @@
 {% block content %}
     <div class="hero bordered" style="--mycolor: #{{ issuer.color }}">
         <div class="row">
-            <div class="offset-1 col-lg-10 d-flex justify-content-between align-items-center">
+            <div class="offset-lg-1 col-lg-10 d-flex justify-content-between align-items-center">
 	            <h2>{{ issuer.name }}</h2>
             </div>
         </div>
@@ -16,7 +16,7 @@
     </div>
 
     <section class="doc-list row">
-        <ul class="offset-1 col-10">
+        <ul class="offset-lg-1 col-lg-10">
         {% for doc in issuer_docs %}
             <li class="doc-item d-flex align-items-start" style="--mycolor: #{{ issuer.color }}">
                 <a class="avatar flex-shrink-0" href="{% url 'issuers_one' slug=doc.issuer.slug %}">
