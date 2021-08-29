@@ -161,8 +161,6 @@ if USE_S3:
     STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
     STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
 else:
-    # STATICFILES_STORAGE = 'django.contrib.staticfiles.finders.FileSystemFinder'
-
     STATIC_URL = "/static/"
     STATIC_ROOT = BASE_DIR / "static"
 
