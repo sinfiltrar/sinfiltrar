@@ -22,7 +22,7 @@ def one(request, slug):
     doc = Doc.objects.get(slug=slug)
 
     html = markdown.markdown(doc.body_md)
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, 'html.parser')
     href_re = re.compile(r"^https?://")
     links = soup.find_all('a', href=href_re)
     for link in links:
