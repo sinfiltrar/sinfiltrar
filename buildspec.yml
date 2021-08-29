@@ -2,18 +2,18 @@
 version: 0.2
 
 env:
-  shell: bash
+    shell: bash
 
 phases:
-  install:
-    commands:
-      - virtualenv venv
-      - source venv/bin/activate
-      - pip install -r requirements.txt
-  build:
-    commands:
-      - zappa update --disable_progres
+    install:
+        commands:
+            - virtualenv venv
+            - source venv/bin/activate
+            - pip install -r requirements.txt
+    build:
+        commands:
+            - zappa update --disable_progres
     post_build:
-      commands:
-          - zappa manage $ZAPPA_ENV "collectstatic --noinput"
-          - zappa manage $ZAPPA_ENV migrate
+        commands:
+            - zappa manage $ZAPPA_ENV "collectstatic --noinput"
+            - zappa manage $ZAPPA_ENV migrate
