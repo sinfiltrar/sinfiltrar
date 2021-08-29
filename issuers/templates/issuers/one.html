@@ -19,7 +19,7 @@
     <section class="doc-list row">
         <ul class="offset-1 col-10">
         {% for doc in issuer_docs %}
-            <li class="doc-item d-flex align-items-start" style="--mycolor: #006EFF">
+            <li class="doc-item d-flex align-items-start" style="--mycolor: #{{ issuer.color }}">
                 <a class="avatar flex-shrink-0" href="{% url 'issuers_one' slug=doc.issuer.slug %}">
                     {{ doc.issuer.avatar }}
                 </a>
