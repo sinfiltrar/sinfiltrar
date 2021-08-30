@@ -23,6 +23,9 @@ h1, h2, h3, h4, .navbar-brand {
 
 .navbar {
     padding: 1rem 0;
+    .navbar-brand {
+        font-size: 1.66rem;
+    }
     .nav-item {
         margin-left: 2rem;
         .nav-link {
@@ -80,6 +83,10 @@ h1, h2, h3, h4, .navbar-brand {
     &.doc-item {
         border-bottom: 1px lighten($line-color, 15%) solid;
     }
+    &:last-child {
+        border-bottom: none;
+    }
+
 
     &.issuer-item {
         padding-top: 0.5rem;
@@ -99,7 +106,7 @@ h1, h2, h3, h4, .navbar-brand {
     .issuer-name {
         text-decoration: none;
         color: var(--mycolor);
-        font-weight: 500;
+        font-weight: 400;
     }
     .date {
         color: #999;
@@ -107,6 +114,13 @@ h1, h2, h3, h4, .navbar-brand {
     .title {
         text-decoration: none;
         color: #000;
+    }
+
+    transition: 0.1s linear;
+    padding-left: 2rem;
+    &:hover {
+        background: #fafafa;
+
     }
 }
 

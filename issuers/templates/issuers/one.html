@@ -19,11 +19,11 @@
         <ul class="offset-lg-1 col-lg-10">
         {% for doc in issuer_docs %}
             <li class="doc-item d-flex align-items-start" style="--mycolor: #{{ issuer.color }}">
-                <a class="avatar flex-shrink-0" href="{% url 'issuers_one' slug=doc.issuer.slug %}">
+                <a class="avatar flex-shrink-0" href="{% url 'docs_one' slug=doc.slug %}">
                     {{ doc.issuer.avatar }}
                 </a>
                 <div class="flex-grow-1 ms-3">
-                    <a class="issuer-name" href="{% url 'issuers_one' slug=doc.issuer.slug %}">{{ doc.issuer.name }}</a>
+                    <a class="issuer-name" href="{% url 'docs_one' slug=doc.slug %}">{{ doc.issuer.name }}</a>
                     <span class="date">{{ doc.issued_at | date }}</span>
                     <br>
                     <a class="title" href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
