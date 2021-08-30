@@ -159,9 +159,8 @@ if USE_S3:
     STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
 else:
     STATIC_URL = "/static/"
-    STATIC_ROOT = BASE_DIR / "static"
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'sinfiltrar/static'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 
 AWS_S3_BUCKET_NAME_INPUT = 'sinfiltrar-input'

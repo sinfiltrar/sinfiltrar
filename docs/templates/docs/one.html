@@ -17,11 +17,15 @@
         </div>
     </div>
 
-    <div class="row">
+
+    <div class="title row">
         <div class="offset-1 col-lg-10">
-            <div class="hero">
-                <h1>{{ doc.title | title }}</h1>
-            </div>
+            <h1>{{ doc.title | title }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="offset-2 col-lg-8">
 
             <div class="body">
                 {{ body | safe }}

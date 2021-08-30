@@ -1,6 +1,8 @@
 body {
   font-family: "Roboto", "Helvetica", sans-serif;
-  font-size: 15px; }
+  font-size: 17px;
+  max-width: 1000px;
+  margin: 0 auto; }
 
 #content {
   min-height: 500px; }
@@ -8,18 +10,28 @@ body {
 h1, h2, h3, h4, .navbar-brand {
   font-weight: 900; }
 
+.lead {
+  font-weight: 500;
+  font-size: 1.6rem; }
+
 .navbar {
   padding: 1rem 0; }
-  .navbar .nav-link {
-    color: #000 !important; }
-    .navbar .nav-link:active {
-      text-decoration: underline; }
+  .navbar .nav-item {
+    margin-left: 2rem; }
+    .navbar .nav-item .nav-link {
+      color: #000;
+      padding-left: 0;
+      padding-right: 0; }
+      .navbar .nav-item .nav-link.active {
+        border-bottom: 2px solid black; }
 
 .hero {
   padding: 3.75rem 0; }
   .hero.bordered {
     border-bottom: 1px #C0C0C0 solid;
     padding-bottom: 6.5rem; }
+  .hero h1 {
+    font-size: 4rem !important; }
   .hero h2 {
     color: var(--mycolor) !important;
     font-size: 2.66rem; }
@@ -47,6 +59,10 @@ h1, h2, h3, h4, .navbar-brand {
   .doc-item.doc-item,
   .issuer-item.doc-item {
     border-bottom: 1px #e6e6e6 solid; }
+  .doc-item.issuer-item,
+  .issuer-item.issuer-item {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem; }
   .doc-item .avatar,
   .issuer-item .avatar {
     width: 3rem;
@@ -73,14 +89,32 @@ h1, h2, h3, h4, .navbar-brand {
 section.doc {
   margin-bottom: 6rem; }
 
+section.about {
+  margin-top: 7rem; }
+  section.about p {
+    margin-bottom: 1rem !important; }
+
+section.issuers {
+  margin-top: 3rem; }
+  section.issuers h2 {
+    margin-bottom: 2rem; }
+
+section .title {
+  margin: 2rem 0; }
+
 section .body {
   padding-bottom: 3rem; }
+  section .body h3 {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem; }
   section .body p {
     line-height: 1.6em;
     margin-bottom: 1.5rem; }
   section .body img {
     display: block;
-    margin: 1rem auto 3rem auto; }
+    margin: auto auto 1rem auto;
+    max-width: 100%; }
 
 section .media {
   border-top: 1px #e6e6e6 solid;
@@ -94,23 +128,25 @@ section .media {
     section .media ul li {
       margin: 0.25rem 0; }
 
-footer > div {
-  line-height: 2rem;
-  padding: 1rem 0;
-  border-top: 1px #C0C0C0 solid; }
-  footer > div a {
-    color: #000;
-    text-decoration: none; }
-  footer > div .footer-brand {
-    font-size: 1.66rem;
-    font-weight: 900; }
-  footer > div .footer-line {
-    font-size: 1.2rem; }
-  footer > div ul {
-    list-style: none;
-    padding-left: 0; }
-    footer > div ul li {
-      margin-right: 1.5rem; }
-    footer > div ul:last-child li {
-      margin-right: 0;
-      margin-left: 1.51rem; }
+footer {
+  margin-top: 4rem; }
+  footer > div {
+    line-height: 2rem;
+    padding: 1rem 0;
+    border-top: 1px #C0C0C0 solid; }
+    footer > div a {
+      color: #000;
+      text-decoration: none; }
+    footer > div .footer-brand {
+      font-size: 1.66rem;
+      font-weight: 900; }
+    footer > div .footer-line {
+      font-size: 1.2rem; }
+    footer > div ul {
+      list-style: none;
+      padding-left: 0; }
+      footer > div ul li {
+        margin-right: 1.5rem; }
+      footer > div ul:last-child li {
+        margin-right: 0;
+        margin-left: 1.51rem; }

@@ -3,7 +3,9 @@ $line-color: #C0C0C0;
 
 body {
     font-family: "Roboto", "Helvetica", sans-serif;
-    font-size: 15px;
+    font-size: 17px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 #content {
@@ -14,12 +16,22 @@ h1, h2, h3, h4, .navbar-brand {
     font-weight: 900;
 }
 
+.lead {
+    font-weight: 500;
+    font-size: 1.6rem;
+}
+
 .navbar {
     padding: 1rem 0;
-    .nav-link {
-        color: #000 !important;
-        &:active {
-            text-decoration: underline
+    .nav-item {
+        margin-left: 2rem;
+        .nav-link {
+            color: #000;
+            padding-left: 0;
+            padding-right: 0;
+            &.active {
+                border-bottom: 2px solid black;
+            }
         }
     }
 }
@@ -30,6 +42,11 @@ h1, h2, h3, h4, .navbar-brand {
         border-bottom: 1px $line-color solid;
         padding-bottom: 6.5rem;
     }
+
+    h1 {
+        font-size: 4rem !important;
+    }
+
     h2 {
         color: var(--mycolor) !important;
         font-size: 2.66rem;
@@ -64,6 +81,11 @@ h1, h2, h3, h4, .navbar-brand {
         border-bottom: 1px lighten($line-color, 15%) solid;
     }
 
+    &.issuer-item {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
     .avatar {
         width: 3rem;
         height: 3rem;
@@ -95,8 +117,32 @@ section {
         margin-bottom: 6rem;
     }
 
+    &.about {
+        margin-top: 7rem;
+        p {
+            margin-bottom: 1rem !important;
+        }
+    }
+
+    &.issuers {
+        margin-top: 3rem;
+        h2 {
+            margin-bottom: 2rem;
+        }
+    }
+
+    .title {
+        margin: 2rem 0;
+    }
+
     .body {
         padding-bottom: 3rem;
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
 
         p {
             line-height: 1.6em;
@@ -105,7 +151,8 @@ section {
 
         img {
             display: block;
-            margin: 1rem auto 3rem auto;
+            margin: auto auto 1rem auto;
+            max-width: 100%;
         }
 
     }
@@ -132,6 +179,7 @@ section {
 
 
 footer {
+    margin-top: 4rem;
     & > div {
         line-height: 2rem;
         a {

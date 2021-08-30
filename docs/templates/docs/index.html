@@ -6,8 +6,8 @@
 
     <div class="hero bordered">
         <div class="row">
-            <div class="offset-1 col-lg-6">
-                <h2>Comunicados oficiales de organismos públicos</h2>
+            <div class="col-lg-12">
+                <h1>Los comunicados oficiales <br> ahora son públicos</h1>
             </div>
         </div>
     </div>
@@ -17,7 +17,7 @@
     </div>
 
     <section class="doc-list row">
-        <ul class="offset-1 col-10">
+        <ul class="offset-lg-1 col-lg-8">
         {% for doc in latest_docs %}
             <li class="doc-item d-flex" style="--mycolor: #{{doc.issuer.color}}">
                 <a class="avatar flex-shrink-0" href="{% url 'issuers_one' slug=doc.issuer.slug %}">
