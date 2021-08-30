@@ -27,4 +27,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
+    path('us/', TemplateView.as_view(template_name='us.html'), name='us'),
 ]
