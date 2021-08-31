@@ -24,17 +24,33 @@ h1, h2, h3, h4, .navbar-brand {
 .navbar {
     padding: 1rem 0;
     .navbar-brand {
-        font-size: 1.66rem;
+        font-size: 1.66rem !important;
     }
     .nav-item {
         margin-left: 2rem;
         .nav-link {
             color: #000;
-            padding-left: 0;
-            padding-right: 0;
+            padding: .75rem 0;
             &.active {
-                border-bottom: 2px solid black;
+                border-bottom: 3px solid black;
             }
+
+            display: inline-block;
+            &::after {
+                display: block;
+                content: '';
+                position: relative;
+                top: calc(1rem - 1px);
+                z-index: -1;
+                width: 0;
+                border-bottom: 3px solid #000;
+                transition: width .2s;
+            }
+            &:hover::after {
+                width: 100%;
+            }
+
+
         }
     }
 }
@@ -79,6 +95,17 @@ h1, h2, h3, h4, .navbar-brand {
     padding-top: 2rem;
     padding-bottom: 2rem;
     text-decoration: none;
+    transition: 0.1s linear background;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    &:hover {
+        background: #fafafa;
+        cursor: pointer;
+        border-left: 1px lighten($line-color, 15%) solid;
+        border-right: 1px lighten($line-color, 15%) solid;
+        margin-right: -1px;
+        margin-left: -1px;
+    }
 
     &.doc-item {
         border-bottom: 1px lighten($line-color, 15%) solid;
@@ -86,7 +113,6 @@ h1, h2, h3, h4, .navbar-brand {
     &:last-child {
         border-bottom: none;
     }
-
 
     &.issuer-item {
         padding-top: 0.5rem;
@@ -116,12 +142,6 @@ h1, h2, h3, h4, .navbar-brand {
         color: #000;
     }
 
-    transition: 0.1s linear;
-    padding-left: 2rem;
-    &:hover {
-        background: #fafafa;
-
-    }
 }
 
 
@@ -190,6 +210,24 @@ section {
             li {
                 margin: 0.25rem 0;
             }
+        }
+    }
+
+    a {
+        text-decoration: none;
+        display: inline-block;
+        &::after {
+            display: block;
+            content: '';
+            position: relative;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-bottom: 1px solid;
+            transition: width .2s;
+        }
+        &:hover::after {
+            width: 100%;
         }
     }
 

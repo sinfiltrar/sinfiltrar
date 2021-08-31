@@ -17,15 +17,26 @@ h1, h2, h3, h4, .navbar-brand {
 .navbar {
   padding: 1rem 0; }
   .navbar .navbar-brand {
-    font-size: 1.66rem; }
+    font-size: 1.66rem !important; }
   .navbar .nav-item {
     margin-left: 2rem; }
     .navbar .nav-item .nav-link {
       color: #000;
-      padding-left: 0;
-      padding-right: 0; }
+      padding: .75rem 0;
+      display: inline-block; }
       .navbar .nav-item .nav-link.active {
-        border-bottom: 2px solid black; }
+        border-bottom: 3px solid black; }
+      .navbar .nav-item .nav-link::after {
+        display: block;
+        content: '';
+        position: relative;
+        top: calc(1rem - 1px);
+        z-index: -1;
+        width: 0;
+        border-bottom: 3px solid #000;
+        transition: width .2s; }
+      .navbar .nav-item .nav-link:hover::after {
+        width: 100%; }
 
 .hero {
   padding: 3.75rem 0; }
@@ -58,8 +69,17 @@ h1, h2, h3, h4, .navbar-brand {
   padding-top: 2rem;
   padding-bottom: 2rem;
   text-decoration: none;
-  transition: 0.1s linear;
-  padding-left: 2rem; }
+  transition: 0.1s linear background;
+  padding-left: 2rem;
+  padding-right: 2rem; }
+  .doc-item:hover,
+  .issuer-item:hover {
+    background: #fafafa;
+    cursor: pointer;
+    border-left: 1px #e6e6e6 solid;
+    border-right: 1px #e6e6e6 solid;
+    margin-right: -1px;
+    margin-left: -1px; }
   .doc-item.doc-item,
   .issuer-item.doc-item {
     border-bottom: 1px #e6e6e6 solid; }
@@ -92,9 +112,6 @@ h1, h2, h3, h4, .navbar-brand {
   .issuer-item .title {
     text-decoration: none;
     color: #000; }
-  .doc-item:hover,
-  .issuer-item:hover {
-    background: #fafafa; }
 
 section.doc {
   margin-bottom: 6rem; }
@@ -140,6 +157,21 @@ section .media {
     padding-left: 0; }
     section .media ul li {
       margin: 0.25rem 0; }
+
+section a {
+  text-decoration: none;
+  display: inline-block; }
+  section a::after {
+    display: block;
+    content: '';
+    position: relative;
+    top: -4px;
+    width: 0;
+    height: 0;
+    border-bottom: 1px solid;
+    transition: width .2s; }
+  section a:hover::after {
+    width: 100%; }
 
 footer {
   margin-top: 4rem; }
