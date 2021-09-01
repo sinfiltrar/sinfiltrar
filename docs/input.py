@@ -25,11 +25,12 @@ def process_existing_s3(dest='db'):
     i = 0
     for object in bucket.objects.all():
         i += 1
-        print(f'Sending SNS for element ({i}/{count}) {object.key}',)
         if dest == 'db':
+            print(f'Processing element ({i}/{count}) {object.key}',)
             doc = Doc.from_s3(object.key)
             doc.save()
         elif dest == 'sns':
+            print(f'Sending SNS for element ({i}/{count}) {object.key}',)
             sns.publish(
                 TopicArn='arn:aws:sns:us-west-2:153920312805:sinfiltrar-input',
                 Message=json.dumps({'receipt': {'action': {'bucketName': object.bucket_name, 'objectKey': object.key}}}),

@@ -1,8 +1,11 @@
+from bs4 import BeautifulSoup
 import mailparser
+import markdown
 import boto3
 import base64
 import logging
 import pytz
+import re
 import twitter
 
 from django.conf import settings
@@ -31,6 +34,7 @@ class Doc(models.Model):
     body_html = models.TextField()
     body_plain = models.TextField(blank=True, null=True)
     body_md = models.TextField()
+    body = models.TextField(blank=True, null=True)
     media = models.JSONField(blank=True, null=True)
     meta = models.JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -73,7 +77,17 @@ class Doc(models.Model):
                     body_html = body_html.replace('cid:{}'.format(att['cid']), att['url'])
 
         # process body
+        # convert to md to clean up all but the format
         body_md = CleanMarkdownConverter().convert(body_html)
+
+        # convert again to html
+        soup = BeautifulSoup(markdown.markdown(body_md), 'html.parser')
+
+        # add target=_blank to a
+        href_re = re.compile(r"^https?://")
+        links = soup.find_all('a', href=href_re)
+        for link in links:
+            link['target'] = '_blank'
 
         doc = cls(**{
             'id': key,
@@ -83,6 +97,7 @@ class Doc(models.Model):
             'body_html': body_html,
             'body_plain': ','.join(mail.text_plain),
             'body_md': body_md,
+            'body': str(soup),
             'media': media,
             'meta': [],
             'issued_at': mail.date.replace(tzinfo=pytz.UTC),

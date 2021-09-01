@@ -7,7 +7,9 @@ class CleanMarkdownConverter(MarkdownConverter):
     """
     def convert(self, html):
         soup = BeautifulSoup(html, 'html.parser')
-        body = soup.find('body')
+
+        # we are only interested in the body (if present)
+        body = soup.find('body') or soup
 
         for tag in body(["script", "style"]):  # remove all javascript and stylesheet code
             tag.decompose()
