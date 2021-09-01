@@ -4,7 +4,6 @@ import base64
 import logging
 import pytz
 import twitter
-from markdownify import markdownify as md
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,6 +11,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from docs.markdown import CleanMarkdownConverter
 from issuers.models import IssuerEmail
 from sinfiltrar.emails import mail_staff
 
@@ -27,10 +27,10 @@ class Doc(models.Model):
     issued_at = models.DateTimeField()
     title = models.CharField(max_length=255)
     slug = models.CharField(max_length=255, unique=True)
-    short_text = models.CharField(max_length=255)
+    short_text = models.CharField(max_length=255, blank=True, null=True)
     body_html = models.TextField()
-    body_plain = models.TextField()
-    body_md = models.TextField(blank=True, null=True)
+    body_plain = models.TextField(blank=True, null=True)
+    body_md = models.TextField()
     media = models.JSONField(blank=True, null=True)
     meta = models.JSONField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
@@ -72,6 +72,9 @@ class Doc(models.Model):
                 if att['cid']:
                     body_html = body_html.replace('cid:{}'.format(att['cid']), att['url'])
 
+        # process body
+        body_md = CleanMarkdownConverter().convert(' '.join(mail.text_html))
+
         doc = cls(**{
             'id': key,
             'title': mail.subject,
@@ -79,7 +82,7 @@ class Doc(models.Model):
             'from_email': mail.from_[0][1],
             'body_html': body_html,
             'body_plain': ','.join(mail.text_plain),
-            'body_md': md(' '.join(mail.text_html)),
+            'body_md': body_md,
             'media': media,
             'meta': [],
             'issued_at': mail.date.replace(tzinfo=pytz.UTC),
