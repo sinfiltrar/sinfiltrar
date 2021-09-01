@@ -108,7 +108,7 @@ h1, h2, h3, h4, .navbar-brand {
         border-bottom: 1px lighten($line-color, 15%) solid;
     }
     &:last-child {
-        border-bottom: none;
+        border-bottom-color: transparent;
     }
 
     &.issuer-item {
@@ -155,6 +155,9 @@ li.issuer-item:hover {
     &:first-child {
         margin-top: -1px;
         border-top: 1px lighten($line-color, 15%) solid;
+    }
+    &:last-child {
+        border-bottom: 1px lighten($line-color, 15%) solid;
     }
 }
 

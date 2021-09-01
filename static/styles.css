@@ -79,7 +79,7 @@ h1, h2, h3, h4, .navbar-brand {
     border-bottom: 1px #e6e6e6 solid; }
   .doc-item:last-child,
   .issuer-item:last-child {
-    border-bottom: none; }
+    border-bottom-color: transparent; }
   .doc-item.issuer-item,
   .issuer-item.issuer-item {
     padding-top: 0.5rem;
@@ -120,6 +120,9 @@ li.issuer-item:hover {
   li.issuer-item:hover:first-child {
     margin-top: -1px;
     border-top: 1px #e6e6e6 solid; }
+  li.doc-item:hover:last-child,
+  li.issuer-item:hover:last-child {
+    border-bottom: 1px #e6e6e6 solid; }
 
 section.doc {
   margin-bottom: 6rem; }
