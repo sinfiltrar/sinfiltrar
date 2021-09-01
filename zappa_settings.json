@@ -26,7 +26,8 @@
 					"sns:Publish"
 				]
 			}
-		}]
+		}],
+        "touch_path": "/about.html"
     }
 }
 
