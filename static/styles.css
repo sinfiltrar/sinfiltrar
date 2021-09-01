@@ -18,6 +18,8 @@ h1, h2, h3, h4, .navbar-brand {
   padding: 1rem 0; }
   .navbar .navbar-brand {
     font-size: 1.66rem !important; }
+  .navbar .navbar-nav {
+    flex-direction: row; }
   .navbar .nav-item {
     margin-left: 2rem; }
     .navbar .nav-item .nav-link {
@@ -153,18 +155,10 @@ section .body {
     max-width: 100%; }
   section .body a {
     text-decoration: none;
-    display: inline-block; }
-    section .body a::after {
-      display: block;
-      content: '';
-      position: relative;
-      top: -4px;
-      width: 0;
-      height: 0;
-      border-bottom: 1px solid;
-      transition: width .2s; }
-    section .body a:hover::after {
-      width: 100%; }
+    border-bottom: 1px solid white;
+    transition: border-color 0.2s linear; }
+    section .body a:hover {
+      border-color: inherit; }
 
 section .media {
   border-top: 1px #e6e6e6 solid;
