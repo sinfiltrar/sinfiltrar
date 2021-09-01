@@ -26,7 +26,7 @@
                     <a class="issuer-name" href="{% url 'docs_one' slug=doc.slug %}">{{ doc.issuer.name }}</a>
                     <span class="date">{{ doc.issued_at | date }}</span>
                     <br>
-                    <a class="title" href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
+                    <a class="doc-title" href="{% url 'docs_one' slug=doc.slug %}">{{ doc.title | title }}</a>
                 </div>
             </li>
         {% endfor %}

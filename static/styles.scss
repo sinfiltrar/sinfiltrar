@@ -21,6 +21,8 @@ h1, h2, h3, h4, .navbar-brand {
     font-size: 1.6rem;
 }
 
+
+
 .navbar {
     padding: 1rem 0;
     .navbar-brand {
@@ -98,14 +100,6 @@ h1, h2, h3, h4, .navbar-brand {
     transition: 0.1s linear background;
     padding-left: 2rem;
     padding-right: 2rem;
-    &:hover {
-        background: #fafafa;
-        cursor: pointer;
-        border-left: 1px lighten($line-color, 15%) solid;
-        border-right: 1px lighten($line-color, 15%) solid;
-        margin-right: -1px;
-        margin-left: -1px;
-    }
 
     &.doc-item {
         border-bottom: 1px lighten($line-color, 15%) solid;
@@ -137,12 +131,30 @@ h1, h2, h3, h4, .navbar-brand {
     .date {
         color: #999;
     }
-    .title {
+    .doc-title {
         text-decoration: none;
         color: #000;
     }
 
 }
+
+// Only highlight when in list
+li.doc-item:hover,
+li.issuer-item:hover {
+    background: #fafafa;
+    cursor: pointer;
+    border-left: 1px lighten($line-color, 15%) solid;
+    border-right: 1px lighten($line-color, 15%) solid;
+    margin-right: -1px;
+    margin-left: -1px;
+//    box-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+    z-index: 2;
+    &:first-child {
+        margin-top: -1px;
+        border-top: 1px lighten($line-color, 15%) solid;
+    }
+}
+
 
 
 section {
@@ -193,6 +205,24 @@ section {
             max-width: 100%;
         }
 
+        a {
+            text-decoration: none;
+            display: inline-block;
+            &::after {
+                display: block;
+                content: '';
+                position: relative;
+                top: -4px;
+                width: 0;
+                height: 0;
+                border-bottom: 1px solid;
+                transition: width .2s;
+            }
+            &:hover::after {
+                width: 100%;
+            }
+        }
+
     }
 
     .media {
@@ -210,24 +240,6 @@ section {
             li {
                 margin: 0.25rem 0;
             }
-        }
-    }
-
-    a {
-        text-decoration: none;
-        display: inline-block;
-        &::after {
-            display: block;
-            content: '';
-            position: relative;
-            top: -4px;
-            width: 0;
-            height: 0;
-            border-bottom: 1px solid;
-            transition: width .2s;
-        }
-        &:hover::after {
-            width: 100%;
         }
     }
 

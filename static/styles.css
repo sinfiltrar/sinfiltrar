@@ -72,14 +72,6 @@ h1, h2, h3, h4, .navbar-brand {
   transition: 0.1s linear background;
   padding-left: 2rem;
   padding-right: 2rem; }
-  .doc-item:hover,
-  .issuer-item:hover {
-    background: #fafafa;
-    cursor: pointer;
-    border-left: 1px #e6e6e6 solid;
-    border-right: 1px #e6e6e6 solid;
-    margin-right: -1px;
-    margin-left: -1px; }
   .doc-item.doc-item,
   .issuer-item.doc-item {
     border-bottom: 1px #e6e6e6 solid; }
@@ -108,10 +100,24 @@ h1, h2, h3, h4, .navbar-brand {
   .doc-item .date,
   .issuer-item .date {
     color: #999; }
-  .doc-item .title,
-  .issuer-item .title {
+  .doc-item .doc-title,
+  .issuer-item .doc-title {
     text-decoration: none;
     color: #000; }
+
+li.doc-item:hover,
+li.issuer-item:hover {
+  background: #fafafa;
+  cursor: pointer;
+  border-left: 1px #e6e6e6 solid;
+  border-right: 1px #e6e6e6 solid;
+  margin-right: -1px;
+  margin-left: -1px;
+  z-index: 2; }
+  li.doc-item:hover:first-child,
+  li.issuer-item:hover:first-child {
+    margin-top: -1px;
+    border-top: 1px #e6e6e6 solid; }
 
 section.doc {
   margin-bottom: 6rem; }
@@ -145,6 +151,20 @@ section .body {
     display: block;
     margin: auto auto 1rem auto;
     max-width: 100%; }
+  section .body a {
+    text-decoration: none;
+    display: inline-block; }
+    section .body a::after {
+      display: block;
+      content: '';
+      position: relative;
+      top: -4px;
+      width: 0;
+      height: 0;
+      border-bottom: 1px solid;
+      transition: width .2s; }
+    section .body a:hover::after {
+      width: 100%; }
 
 section .media {
   border-top: 1px #e6e6e6 solid;
@@ -157,21 +177,6 @@ section .media {
     padding-left: 0; }
     section .media ul li {
       margin: 0.25rem 0; }
-
-section a {
-  text-decoration: none;
-  display: inline-block; }
-  section a::after {
-    display: block;
-    content: '';
-    position: relative;
-    top: -4px;
-    width: 0;
-    height: 0;
-    border-bottom: 1px solid;
-    transition: width .2s; }
-  section a:hover::after {
-    width: 100%; }
 
 footer {
   margin-top: 4rem; }
