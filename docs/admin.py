@@ -7,3 +7,4 @@ class DocAdmin(admin.ModelAdmin):
     date_hierarchy = 'issued_at'
     list_display = ('title', 'from_email', 'issued_at', 'issuer')
     list_filter = ('issuer', )
+    search_fields = ('title', 'slug', 'body_plain', )
