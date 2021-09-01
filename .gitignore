@@ -130,3 +130,6 @@ dmypy.json
 
 # IntelliJ stuff
 .idea/
+
+
+sinfiltrar/settings_prod.py
