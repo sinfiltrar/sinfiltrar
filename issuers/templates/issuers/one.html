@@ -11,6 +11,7 @@
         </div>
     </div>
 
+    {% if issuer_docs %}
     <div class="header">
 	    <h3>Últimos comunicados</h3>
     </div>
@@ -32,5 +33,11 @@
         {% endfor %}
         </ul>
     </section>
+    {% else %}
+        <div class="header">
+            <h3>Esperando primer comunicado</h3>
+            <p>Ya nos comunicamos con {{ issuer.name }} y estamos a la espera de recibir el primer comunicado.</p>
+        </div>
+    {% endif %}
 
 {% endblock %}

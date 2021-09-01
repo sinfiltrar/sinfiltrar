@@ -10,7 +10,7 @@ from docs.models import Doc
 
 def index(request):
 	context = {
-		'issuers': Issuer.objects.order_by('name')
+		'issuers': Issuer.objects.filter(status__in=['waiting', 'active']).order_by('name')
 	}
 	return render(request, 'issuers/index.html', context)
 
