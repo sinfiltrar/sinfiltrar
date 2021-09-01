@@ -6,10 +6,6 @@ from rest_framework import viewsets
 from docs.serializers import DocSerializer
 from docs.models import Doc
 
-import markdown
-from bs4 import BeautifulSoup
-import re
-
 
 def index(request):
     context = {
@@ -20,18 +16,7 @@ def index(request):
 
 def one(request, slug):
     doc = Doc.objects.get(slug=slug)
-
-    html = markdown.markdown(doc.body_md)
-    soup = BeautifulSoup(html, 'html.parser')
-    href_re = re.compile(r"^https?://")
-    links = soup.find_all('a', href=href_re)
-    for link in links:
-        link['target'] = '_blank'
-
-    context = {
-        'doc': doc,
-        'body': str(soup),
-    }
+    context = {'doc': doc}
     return render(request, 'docs/one.html', context)
 
 
