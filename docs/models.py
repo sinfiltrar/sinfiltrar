@@ -64,7 +64,7 @@ class Doc(models.Model):
         mail = mailparser.parse_from_string(raw_email)
 
         media = cls.process_media(key, mail)
-        body_html = ','.join(mail.text_html)
+        body_html = ' '.join(mail.text_html)
 
         # correctly set s3 attachments urls
         if body_html:
@@ -73,7 +73,7 @@ class Doc(models.Model):
                     body_html = body_html.replace('cid:{}'.format(att['cid']), att['url'])
 
         # process body
-        body_md = CleanMarkdownConverter().convert(' '.join(mail.text_html))
+        body_md = CleanMarkdownConverter().convert(body_html)
 
         doc = cls(**{
             'id': key,
