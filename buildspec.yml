@@ -13,7 +13,5 @@ phases:
     build:
         commands:
             - zappa update --disable_progres
-    post_build:
-        commands:
             - zappa manage $ZAPPA_ENV "collectstatic --noinput"
             - zappa manage $ZAPPA_ENV migrate
