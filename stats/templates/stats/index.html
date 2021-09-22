@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Documentos nuevos por mes</h2>
+<canvas style="margin-top: 30px; margin-bottom: 30px; width: 100%; height: 400px;" id="myChart"></canvas>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script>
+
+request_chart_data().then((data) => render_chart(data))
+
+
+async function request_chart_data() {
+    response = await fetch('{% url 'query_weekly-docs' %}')
+    return response.json()
+}
+
+function render_chart(data) {
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    labels = data.map((row) => row.month);
+
+    const config = {
+      type: 'bar',
+      data: {
+          labels,
+          datasets: [{
+             data: data.map((row) => row.count),
+             backgroundColor: '#006EFF'
+          }],
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Chart.js Bar Chart - Stacked'
+          },
+        },
+        responsive: true,
+        scales: {
+          xAxes: [{
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true
+          }]
+        }
+      }
+    };
+    const chart = new Chart(ctx, config);
+}
+</script>
+{% endblock %}

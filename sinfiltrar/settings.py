@@ -32,6 +32,7 @@ DEBUG = os.getenv('APP_DEBUG', True)
 
 ALLOWED_HOSTS = [
     'localhost',
+    '127.0.0.1',
     'sinfiltr.ar',
     'ev3szims3b.execute-api.us-west-2.amazonaws.com',
 ]
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
 
     'issuers.apps.IssuersConfig',
     'docs.apps.DocsConfig',
+    'stats.apps.StatsConfig',
 
     'corsheaders',
     'django_s3_storage',
