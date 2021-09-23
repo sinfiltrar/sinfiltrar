@@ -42,6 +42,12 @@ class Doc(models.Model):
     class Meta:
         ordering = ('-issued_at', )
 
+    def save(self, *args, **kwargs):
+        insert = not self.id
+        super().save(*args, **kwargs)
+        if insert:
+            self.send_tweet()
+
     def set_issuer_based_on_email(self):
         try:
             issuer_email = IssuerEmail.objects.filter(email=self.from_email).get()
