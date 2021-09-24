@@ -43,10 +43,10 @@ class Doc(models.Model):
         ordering = ('-issued_at', )
 
     def save(self, *args, **kwargs):
-        insert = not self.id
+        insert = self._state.adding
         super().save(*args, **kwargs)
-        if insert:
-            self.send_tweet()
+        # if insert:
+        self.send_tweet()
 
     def set_issuer_based_on_email(self):
         try:
@@ -174,4 +174,8 @@ class Doc(models.Model):
                           access_token_key=settings.TWITTER_ACCESS_TOKEN,
                           access_token_secret=settings.TWITTER_ACCESS_TOKEN_SECRET)
 
-        api.PostUpdate(f'{self.issuer.name}: {self.title} – {self.get_absolute_url()}')
+        tweet = f'{self.issuer.name}: {self.title} – {self.get_absolute_url()}'
+
+        print(f'Tweeting about Doc #{self.id}: {tweet}')
+
+        api.PostUpdate(tweet)
