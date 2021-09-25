@@ -162,7 +162,7 @@ class Doc(models.Model):
 
     def get_absolute_url(self):
         from django.urls import reverse
-        return settings.DOMAIN + reverse('docs_one', kwargs={'slug': self.slug})
+        return reverse('docs_one', kwargs={'slug': self.slug})
 
     def send_tweet(self):
 
@@ -174,7 +174,7 @@ class Doc(models.Model):
                           access_token_key=settings.TWITTER_ACCESS_TOKEN,
                           access_token_secret=settings.TWITTER_ACCESS_TOKEN_SECRET)
 
-        tweet = f'{self.issuer.name}: {self.title} – {self.get_absolute_url()}'
+        tweet = f'{self.issuer.name}: {self.title} – {settings.DOMAIN}{self.get_absolute_url()}'
 
         print(f'Tweeting about Doc #{self.id}: {tweet}')
 

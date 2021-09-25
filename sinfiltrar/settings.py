@@ -37,7 +37,7 @@ ALLOWED_HOSTS = [
     'ev3szims3b.execute-api.us-west-2.amazonaws.com',
 ]
 
-
+SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 
     'issuers.apps.IssuersConfig',
     'docs.apps.DocsConfig',

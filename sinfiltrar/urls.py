@@ -16,6 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
+from django.contrib.sitemaps.views import sitemap
+from .sitemap import MainSitemap
+from stats.sitemap import StatsSitemap
+from docs.sitemap import DocsSitemap
+from issuers.sitemap import IssuersSitemap
+
+sitemaps = {
+    'main': MainSitemap,
+    'stats': StatsSitemap,
+    'docs': DocsSitemap,
+    'issuers': IssuersSitemap,
+}
 
 urlpatterns = [
     path('', include('docs.urls')),
@@ -25,4 +37,5 @@ urlpatterns = [
     path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
     path('stats/', include('stats.urls')),
     path('us/', TemplateView.as_view(template_name='us.html'), name='us'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ]

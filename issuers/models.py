@@ -16,6 +16,10 @@ class Issuer(models.Model):
     avatar = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('issuers_one', kwargs={'slug': self.slug})
+
     def __str__(self):
         return f'({self.status}) {self.name}'
 
