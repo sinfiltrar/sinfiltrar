@@ -94,7 +94,8 @@ h1, h2, h3, h4, .navbar-brand {
     background: var(--mycolor);
     border-radius: 50%;
     font-size: 1.8rem;
-    text-decoration: none; }
+    text-decoration: none;
+    color: #fff; }
   .doc-item .issuer-name,
   .issuer-item .issuer-name {
     text-decoration: none;
